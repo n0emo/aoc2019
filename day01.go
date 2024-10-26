@@ -8,7 +8,7 @@ import (
     "strings"
 )
 
-func get_fuel(mass int) int {
+func GetFuel(mass int) int {
     fuel := (mass / 3) - 2
     if fuel < 0 {
         fuel = 0
@@ -17,7 +17,7 @@ func get_fuel(mass int) int {
     return fuel
 }
 
-func solve1(contents string) int {
+func Solve1(contents string) int {
     lines := strings.Split(contents, "\n")
 
     sum := 0
@@ -26,14 +26,14 @@ func solve1(contents string) int {
 
         _, err := fmt.Sscanf(line, "%d", &num)
         if err == nil {
-            sum += get_fuel(num)
+            sum += GetFuel(num)
         }
     }
 
     return sum
 }
 
-func solve2(contents string) int {
+func Solve2(contents string) int {
     lines := strings.Split(contents, "\n")
 
     sum := 0
@@ -43,7 +43,7 @@ func solve2(contents string) int {
         _, err := fmt.Sscanf(line, "%d", &num)
         if err == nil {
             module_sum := 0
-            for fuel := get_fuel(num); fuel > 0; fuel = get_fuel(fuel) {
+            for fuel := GetFuel(num); fuel > 0; fuel = GetFuel(fuel) {
                 module_sum += fuel
             }
 
@@ -75,10 +75,10 @@ func main() {
             log.Fatal(err)
         }
 
-        result1 := solve1(string(contents[:]))
+        result1 := Solve1(string(contents[:]))
         fmt.Printf("  1: %d\n", result1)
 
-        result2 := solve2(string(contents[:]))
+        result2 := Solve2(string(contents[:]))
         fmt.Printf("  2: %d\n", result2)
     }
 }
