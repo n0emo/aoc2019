@@ -2,13 +2,11 @@ package main
 
 import (
     "fmt"
-    "io"
-    "log"
-    "os"
     "strings"
+    "strconv"
 )
 
-func GetFuel(mass int) int {
+func getFuel(mass int) int {
     fuel := (mass / 3) - 2
     if fuel < 0 {
         fuel = 0
@@ -17,7 +15,7 @@ func GetFuel(mass int) int {
     return fuel
 }
 
-func Solve1(contents string) int {
+func SolveDay01Part1(contents string) string {
     lines := strings.Split(contents, "\n")
 
     sum := 0
@@ -26,14 +24,14 @@ func Solve1(contents string) int {
 
         _, err := fmt.Sscanf(line, "%d", &num)
         if err == nil {
-            sum += GetFuel(num)
+            sum += getFuel(num)
         }
     }
 
-    return sum
+    return strconv.Itoa(sum)
 }
 
-func Solve2(contents string) int {
+func SolveDay01Part2(contents string) string {
     lines := strings.Split(contents, "\n")
 
     sum := 0
@@ -43,7 +41,7 @@ func Solve2(contents string) int {
         _, err := fmt.Sscanf(line, "%d", &num)
         if err == nil {
             module_sum := 0
-            for fuel := GetFuel(num); fuel > 0; fuel = GetFuel(fuel) {
+            for fuel := getFuel(num); fuel > 0; fuel = getFuel(fuel) {
                 module_sum += fuel
             }
 
@@ -51,35 +49,6 @@ func Solve2(contents string) int {
         }
     }
 
-    return sum
-}
-
-func main() {
-    for _, arg := range os.Args[1:] {
-        fmt.Printf("%s:\n", arg)
-
-        file, err := os.Open(arg)
-        if err != nil {
-            log.Fatal(err)
-        }
-
-        defer func() {
-            err := file.Close()
-            if err != nil {
-                log.Fatal(err)
-            }
-        }()
-
-        contents, err := io.ReadAll(file)
-        if err != nil {
-            log.Fatal(err)
-        }
-
-        result1 := Solve1(string(contents[:]))
-        fmt.Printf("  1: %d\n", result1)
-
-        result2 := Solve2(string(contents[:]))
-        fmt.Printf("  2: %d\n", result2)
-    }
+    return strconv.Itoa(sum)
 }
 
